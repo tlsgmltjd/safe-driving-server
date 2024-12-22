@@ -19,4 +19,9 @@ class EmergencyNumber(
     val user: User,
     @Column(nullable = false)
     val number: String,
-)
+) {
+    companion object {
+        fun of(user: User, number: String): EmergencyNumber =
+            EmergencyNumber(user = user, number = number)
+    }
+}

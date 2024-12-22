@@ -18,7 +18,7 @@ class User(
     @Column(nullable = false, columnDefinition = "VARCHAR(30)")
     val name: String,
     
-    @JoinColumn(name = "cam_id", nullable = false)
+    @JoinColumn(name = "cam_id", nullable = false, unique = true)
     @OneToOne(fetch = FetchType.LAZY)
     val cam: Cam,
 
