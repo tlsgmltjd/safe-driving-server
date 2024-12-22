@@ -15,4 +15,9 @@ class DriveProcessor(
         return driveRepository.save(drive)
     }
     
+    fun end(drive: Drive) {
+        drive.end()
+        driveRepository.save(drive)
+    }
+    
 }
