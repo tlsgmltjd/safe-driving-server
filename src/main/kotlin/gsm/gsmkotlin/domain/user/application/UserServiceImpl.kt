@@ -3,6 +3,7 @@ package gsm.gsmkotlin.domain.user.application
 import gsm.gsmkotlin.domain.cam.application.CamReader
 import gsm.gsmkotlin.domain.user.application.dto.LoginDto
 import gsm.gsmkotlin.domain.user.application.dto.SignupDto
+import gsm.gsmkotlin.global.filter.JwtReqFilter.Companion.BEARER_PREFIX
 import gsm.gsmkotlin.global.security.jwt.TokenGenerator
 import gsm.gsmkotlin.global.thirdparty.feign.GoogleLoginFeignClientService
 import org.springframework.stereotype.Service
@@ -28,7 +29,7 @@ class UserServiceImpl(
     override fun login(loginDto: LoginDto): String {
         val email = googleLoginFeignClientService.login(loginDto.accessToken).email
         val user = userReader.readUserByEmail(email)
-        return tokenGenerator.generateToken(user.id.toString()).accessToken
+        return BEARER_PREFIX + tokenGenerator.generateToken(user.id.toString()).accessToken
     }
     
 }
