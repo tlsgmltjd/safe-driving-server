@@ -49,6 +49,7 @@ class SecurityConfig(
         
         http.authorizeHttpRequests { httpRequests -> httpRequests
             .requestMatchers(HttpMethod.GET, "/user").hasAuthority(Authority.USER.name)
+            .requestMatchers(HttpMethod.POST, "/drive/start").hasAuthority(Authority.USER.name)
             .anyRequest().permitAll()
         }
         
