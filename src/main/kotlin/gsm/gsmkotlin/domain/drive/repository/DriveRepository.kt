@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.Query
 interface DriveRepository: JpaRepository<Drive, Long> {
     @Query("SELECT d FROM Drive d WHERE d.user = :user AND d.isActive = false")
     fun findAllHistoryByUser(user: User): List<Drive>
+    fun existByUserAndActiveIsTrue(user: User): Boolean
 }
