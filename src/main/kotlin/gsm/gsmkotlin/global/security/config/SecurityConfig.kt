@@ -1,5 +1,6 @@
 package gsm.gsmkotlin.global.security.config
 
+import gsm.gsmkotlin.domain.user.type.Authority
 import gsm.gsmkotlin.global.filter.ExceptionHandlerFilter
 import gsm.gsmkotlin.global.filter.JwtReqFilter
 import gsm.gsmkotlin.global.security.handler.CustomAccessDeniedHandler
@@ -47,6 +48,7 @@ class SecurityConfig(
             .addFilterBefore(exceptionHandlerFilter, JwtReqFilter::class.java)
         
         http.authorizeHttpRequests { httpRequests -> httpRequests
+            .requestMatchers(HttpMethod.GET, "/user").hasAuthority(Authority.USER.name)
             .anyRequest().permitAll()
         }
         
