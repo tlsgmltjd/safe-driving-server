@@ -18,19 +18,12 @@ class TokenGenerator(
     
     private final val TOKEN_TYPE = "tokenType"
     private final val ACCESS_TOKEN = "accessToken"
-    private final val REFRESH_TOKEN = "refreshToken"
     
     fun generateToken(userId: String): TokenDto =
         TokenDto(
             accessToken = generateAccessToken(userId),
-            refreshToken = generateRefreshToken(userId),
             accessTokenExp = jwtEnv.accessExp,
-            refreshTokenExp = jwtEnv.refreshExp
         )
-    
-    fun getUserIdFromRefreshToken(token: String): String {
-        return getRefreshTokenSubject(token)
-    }
     
     private fun generateAccessToken(userId: String): String =
         Jwts.builder()
@@ -40,19 +33,6 @@ class TokenGenerator(
             .setIssuedAt(Date())
             .setExpiration(Date(System.currentTimeMillis() + jwtEnv.accessExp * 1000))
             .compact()
-    
-    private fun generateRefreshToken(userId: String): String =
-        Jwts.builder()
-            .signWith(Keys.hmacShaKeyFor(jwtEnv.refreshSecret.toByteArray(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
-            .setSubject(userId)
-            .claim(TOKEN_TYPE, REFRESH_TOKEN)
-            .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + jwtEnv.refreshExp * 1000))
-            .compact()
-    
-    private fun getRefreshTokenSubject(refreshToken: String): String {
-        return getTokenBody(refreshToken, Keys.hmacShaKeyFor(jwtEnv.refreshSecret.toByteArray(StandardCharsets.UTF_8))).subject
-    }
     
     companion object {
         fun getTokenBody(token: String, secret: Key): Claims {
