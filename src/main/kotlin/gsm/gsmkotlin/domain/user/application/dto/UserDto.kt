@@ -6,3 +6,7 @@ data class SignupDto(
     val camId: String,
     val emergencyNumbers: Set<String>
 )
+
+data class LoginDto(
+    val accessToken: String
+)
