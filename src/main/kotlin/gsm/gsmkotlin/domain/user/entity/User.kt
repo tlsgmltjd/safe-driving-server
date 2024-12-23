@@ -15,14 +15,24 @@ class User(
     @Column(nullable = false, unique = true, columnDefinition = "VARCHAR(100)")
     val email: String,
 
-    @Column(nullable = false, columnDefinition = "VARCHAR(30)")
-    val name: String,
+    @Column(columnDefinition = "VARCHAR(30)")
+    var name: String? = null,
     
-    @JoinColumn(name = "cam_id", nullable = false, unique = true)
+    @JoinColumn(name = "cam_id", unique = true)
     @OneToOne(fetch = FetchType.LAZY)
-    val cam: Cam,
+    var cam: Cam? = null,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "authority", nullable = false)
-    val authority: Authority = Authority.USER
-)
+    var authority: Authority = Authority.UNAUTHORIZATION
+) {
+    fun signup(name: String, cam: Cam) {
+        this.name = name
+        this.cam = cam
+        this.authority = Authority.USER
+    }
+    
+    companion object {
+        fun of(email: String) = User(email = email)
+    }
+}

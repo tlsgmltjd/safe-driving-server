@@ -14,4 +14,6 @@ class UserReader(
         userRepository.findByEmail(email)
             ?: throw GlobalException("유저를 찾을 수 없습니다. email = $email", HttpStatus.NOT_FOUND)
     
+    fun readUserByEmailOrNull(email: String) = userRepository.findByEmail(email)
+    
 }

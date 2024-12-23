@@ -25,17 +25,19 @@ class UserServiceImpl(
 ) : UserService {
     
     @Transactional(rollbackFor = [Exception::class])
-    override fun signup(signupDto: SignupDto) {
-        val cam = camReader.readCamById(signupDto.camId)
-        val email = googleLoginFeignClientService.login(signupDto.accessToken).email
-        userProcessor.signup(email, signupDto.name, cam, signupDto.emergencyNumbers)
+    override fun login(loginDto: LoginDto): String {
+        val email = googleLoginFeignClientService.login(loginDto.accessToken).email
+        val user = userReader.readUserByEmailOrNull(email)
+            ?: userProcessor.register(email)
+        return BEARER_PREFIX + tokenGenerator.generateToken(user.id.toString()).accessToken
     }
     
     @Transactional(rollbackFor = [Exception::class])
-    override fun login(loginDto: LoginDto): String {
-        val email = googleLoginFeignClientService.login(loginDto.accessToken).email
+    override fun signup(signupDto: SignupDto) {
+        val cam = camReader.readCamById(signupDto.camId)
+        val email = googleLoginFeignClientService.login(signupDto.accessToken).email
         val user = userReader.readUserByEmail(email)
-        return BEARER_PREFIX + tokenGenerator.generateToken(user.id.toString()).accessToken
+        userProcessor.signup(user, signupDto.name, cam, signupDto.emergencyNumbers)
     }
     
     @Transactional(readOnly = true)

@@ -13,18 +13,19 @@ class UserProcessor(
     private val emergencyNumberRepository: EmergencyNumberRepository
 ) {
     
-    fun signup(email: String, name: String, cam: Cam, emergencyNumbers: Set<String>) {
-        val userEntity = User(
-            email = email,
-            name = name,
-            cam = cam
-        )
+    fun register(email: String): User {
+        val userEntity = User.of(email)
+        return userRepository.save(userEntity)
+    }
+    
+    fun signup(user: User, name: String, cam: Cam, emergencyNumbers: Set<String>) {
+        user.signup(name, cam)
         
         val emergencyNumberEntities = emergencyNumbers.stream()
-            .map { EmergencyNumber.of(userEntity, it) }
+            .map { EmergencyNumber.of(user, it) }
             .toList()
         
-        userRepository.save(userEntity)
+        userRepository.save(user)
         emergencyNumberRepository.saveAll(emergencyNumberEntities)
     }
     
