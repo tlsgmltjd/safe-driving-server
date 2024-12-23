@@ -1,6 +1,6 @@
 package gsm.gsmkotlin.domain.detection.application
 
-import gsm.gsmkotlin.domain.detection.application.repository.DetectionRepository
+import gsm.gsmkotlin.domain.detection.repository.DetectionRepository
 import gsm.gsmkotlin.domain.detection.entity.Detection
 import gsm.gsmkotlin.domain.detection.type.DetectionType
 import gsm.gsmkotlin.domain.drive.entity.Drive

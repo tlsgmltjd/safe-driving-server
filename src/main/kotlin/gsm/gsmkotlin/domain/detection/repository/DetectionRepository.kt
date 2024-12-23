@@ -1,4 +1,4 @@
-package gsm.gsmkotlin.domain.detection.application.repository
+package gsm.gsmkotlin.domain.detection.repository
 
 import gsm.gsmkotlin.domain.detection.entity.Detection
 import org.springframework.data.jpa.repository.JpaRepository
