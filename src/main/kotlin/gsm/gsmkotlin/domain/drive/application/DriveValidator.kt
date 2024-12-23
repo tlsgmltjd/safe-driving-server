@@ -12,7 +12,7 @@ class DriveValidator(
 ) {
     
     fun validIsNotActive(user: User) {
-        val isActive = driveRepository.existByUserAndActiveIsTrue(user)
+        val isActive = driveRepository.existsByUserAndActiveIsTrue(user)
         if(isActive) {
             throw GlobalException("현재 운전중입니다.", HttpStatus.BAD_GATEWAY)
         }

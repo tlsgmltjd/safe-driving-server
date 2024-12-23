@@ -24,7 +24,7 @@ class Drive(
     @Column(nullable = false)
     val detectedCount: Int = 0,
     @Column(nullable = false)
-    var isActive: Boolean = true,
+    var active: Boolean = true,
     var exitCount: Int = 0,
     var almostSleepCount: Int = 0,
     var sleepingCount: Int = 0,
@@ -36,6 +36,22 @@ class Drive(
     }
     
     fun end() {
-        this.isActive = false
+        this.active = false
+    }
+    
+    fun addExitCount() {
+        this.exitCount++
+    }
+    
+    fun addAlmostSleepCount() {
+        this.almostSleepCount++
+    }
+    
+    fun addSleepingCount() {
+        this.sleepingCount++
+    }
+    
+    fun addWakeUpCount() {
+        this.wakeUpCount++
     }
 }

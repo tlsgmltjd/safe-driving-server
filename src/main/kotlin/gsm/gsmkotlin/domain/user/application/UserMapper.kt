@@ -24,7 +24,7 @@ class UserMapper {
         }
         
         val userInfo = UserInfoDto(
-            name = user.name,
+            name = user.name!!,
             email = user.email,
             driveCount = drives.size,
             drives = drives
