@@ -19,5 +19,10 @@ class DriveReader(
         driveRepository.findByUserAndActiveIsTrue(user)
             ?: throw GlobalException("운전중이지 않습니다.", HttpStatus.BAD_REQUEST)
     
-    fun readIsActiveDriveByCam(cam: Cam): Boolean = driveRepository.isActiveByCam(cam)
+    fun isActiveDriveByCam(cam: Cam): Boolean =
+        driveRepository.findByActiveByCam(cam) != null
+    
+    fun readActiveDriveByCam(cam: Cam): Drive =
+        driveRepository.findByActiveByCam(cam)
+            ?: throw GlobalException("운전중인 drive를 찾을 수 없습니다. cam id = ${cam.camId}", HttpStatus.NOT_FOUND)
 }

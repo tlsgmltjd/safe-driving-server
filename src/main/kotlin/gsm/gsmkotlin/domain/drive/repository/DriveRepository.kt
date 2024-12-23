@@ -11,6 +11,6 @@ interface DriveRepository: JpaRepository<Drive, Long> {
     fun findAllHistoryByUser(user: User): List<Drive>
     fun existByUserAndActiveIsTrue(user: User): Boolean
     fun findByUserAndActiveIsTrue(user: User): Drive?
-    @Query("SELECT COUNT(d) > 0 FROM Drive d JOIN d.user u WHERE u.cam = :cam AND d.isActive = true")
-    fun isActiveByCam(cam: Cam): Boolean
+    @Query("SELECT d FROM Drive d JOIN d.user u WHERE u.cam = :cam AND d.isActive = true")
+    fun findByActiveByCam(cam: Cam): Drive?
 }

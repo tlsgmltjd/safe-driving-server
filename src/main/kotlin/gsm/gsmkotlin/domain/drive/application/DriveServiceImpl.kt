@@ -41,7 +41,7 @@ class DriveServiceImpl(
     override fun isActive(camId: String, camSecret: String): DriveIsActiveDto {
         val cam = camReader.readCamById(camId)
         camValidator.valid(cam, camSecret)
-        val isActive = driveReader.readIsActiveDriveByCam(cam)
+        val isActive = driveReader.isActiveDriveByCam(cam)
         return driveMapper.mappingDriveIsActive(isActive)
     }
     

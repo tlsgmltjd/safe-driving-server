@@ -24,4 +24,9 @@ class Detection(
     val type: DetectionType,
     @Column(nullable = false)
     val date: LocalDateTime = LocalDateTime.now()
-)
+) {
+    companion object {
+        fun of(drive: Drive, type: DetectionType): Detection =
+            Detection(drive = drive, type = type)
+    }
+}
