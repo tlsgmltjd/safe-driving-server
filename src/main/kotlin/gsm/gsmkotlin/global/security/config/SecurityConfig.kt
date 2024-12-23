@@ -53,6 +53,7 @@ class SecurityConfig(
             .requestMatchers(HttpMethod.POST, "/drive/end").hasAuthority(Authority.USER.name)
             .requestMatchers(HttpMethod.GET, "/drive/status/{camId}").hasAuthority(Authority.ADMIN.name)
             .requestMatchers(HttpMethod.POST, "/detection").hasAuthority(Authority.ADMIN.name)
+            .requestMatchers(HttpMethod.POST, "/cam").hasAuthority(Authority.ADMIN.name)
             .anyRequest().permitAll()
         }
         
