@@ -10,3 +10,7 @@ data class DriveEndDto(
     val detectionCount: Int,
     val detectionInfo: DetectionDetailDto
 )
+
+data class DriveIsActiveDto(
+    val isActive: Boolean
+)

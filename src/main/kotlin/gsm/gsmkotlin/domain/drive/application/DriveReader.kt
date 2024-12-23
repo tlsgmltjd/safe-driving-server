@@ -1,5 +1,6 @@
 package gsm.gsmkotlin.domain.drive.application
 
+import gsm.gsmkotlin.domain.cam.entity.Cam
 import gsm.gsmkotlin.domain.drive.entity.Drive
 import gsm.gsmkotlin.domain.drive.repository.DriveRepository
 import gsm.gsmkotlin.domain.user.entity.User
@@ -17,4 +18,6 @@ class DriveReader(
     fun readCurrentDriveByUser(user: User): Drive =
         driveRepository.findByUserAndActiveIsTrue(user)
             ?: throw GlobalException("운전중이지 않습니다.", HttpStatus.BAD_REQUEST)
+    
+    fun readIsActiveDriveByCam(cam: Cam): Boolean = driveRepository.isActiveByCam(cam)
 }

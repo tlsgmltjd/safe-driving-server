@@ -1,6 +1,7 @@
 package gsm.gsmkotlin.domain.drive.application
 
 import gsm.gsmkotlin.domain.drive.application.dto.DriveEndDto
+import gsm.gsmkotlin.domain.drive.application.dto.DriveIsActiveDto
 import gsm.gsmkotlin.domain.drive.application.dto.DriveStartDto
 import gsm.gsmkotlin.domain.drive.entity.Drive
 import gsm.gsmkotlin.domain.user.application.dto.DetectionDetailDto
@@ -21,5 +22,8 @@ class DriveMapper {
                 sleeping = drive.sleepingCount
             )
         )
+    
+    fun mappingDriveIsActive(isActive: Boolean) =
+        DriveIsActiveDto(isActive)
     
 }
