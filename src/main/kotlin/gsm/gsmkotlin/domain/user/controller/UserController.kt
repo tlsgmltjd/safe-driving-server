@@ -2,6 +2,7 @@ package gsm.gsmkotlin.domain.user.controller
 
 import gsm.gsmkotlin.domain.user.application.UserService
 import gsm.gsmkotlin.domain.user.application.dto.LoginDto
+import gsm.gsmkotlin.domain.user.application.dto.LoginResponseDto
 import gsm.gsmkotlin.domain.user.application.dto.SignupDto
 import gsm.gsmkotlin.domain.user.application.dto.UserInfoDto
 import gsm.gsmkotlin.global.filter.JwtReqFilter.Companion.AUTHORIZATION_HEADER
@@ -26,10 +27,9 @@ class UserController(
     }
     
     @PostMapping("/login")
-    fun signup(@RequestBody loginDto: LoginDto, httpServletResponse: HttpServletResponse): ResponseEntity<Void> {
-        val accessToken = userService.login(loginDto)
-        httpServletResponse.addHeader(AUTHORIZATION_HEADER, accessToken)
-        return ResponseEntity.ok().build()
+    fun signup(@RequestBody loginDto: LoginDto, httpServletResponse: HttpServletResponse): ResponseEntity<LoginResponseDto> {
+        val response = userService.login(loginDto)
+        return ResponseEntity.ok(response)
     }
     
     @GetMapping

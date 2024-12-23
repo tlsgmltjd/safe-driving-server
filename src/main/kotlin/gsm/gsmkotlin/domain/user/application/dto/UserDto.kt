@@ -1,5 +1,6 @@
 package gsm.gsmkotlin.domain.user.application.dto
 
+import gsm.gsmkotlin.domain.user.type.Authority
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import org.springframework.format.annotation.DateTimeFormat
@@ -19,6 +20,11 @@ data class SignupDto(
 data class LoginDto(
     @NotBlank
     val accessToken: String
+)
+
+data class LoginResponseDto(
+    val accessToken: String,
+    val authority: Authority
 )
 
 data class UserInfoDto(

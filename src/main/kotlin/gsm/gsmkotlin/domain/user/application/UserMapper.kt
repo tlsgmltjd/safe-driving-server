@@ -3,12 +3,19 @@ package gsm.gsmkotlin.domain.user.application
 import gsm.gsmkotlin.domain.drive.entity.Drive
 import gsm.gsmkotlin.domain.user.application.dto.DetectionDetailDto
 import gsm.gsmkotlin.domain.user.application.dto.DriveDetailDto
+import gsm.gsmkotlin.domain.user.application.dto.LoginResponseDto
 import gsm.gsmkotlin.domain.user.application.dto.UserInfoDto
 import gsm.gsmkotlin.domain.user.entity.User
 import org.springframework.stereotype.Component
 
 @Component
 class UserMapper {
+    
+    fun mappingLoginResponse(user: User, accessToken: String) =
+        LoginResponseDto(
+            accessToken = accessToken,
+            authority = user.authority,
+        )
     
     fun mappingUserInfo(user: User, driveHistory: List<Drive>): UserInfoDto {
         val drives = driveHistory.map {

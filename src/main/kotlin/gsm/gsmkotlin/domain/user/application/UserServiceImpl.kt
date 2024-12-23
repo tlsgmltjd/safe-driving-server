@@ -3,6 +3,7 @@ package gsm.gsmkotlin.domain.user.application
 import gsm.gsmkotlin.domain.cam.application.CamReader
 import gsm.gsmkotlin.domain.drive.application.DriveReader
 import gsm.gsmkotlin.domain.user.application.dto.LoginDto
+import gsm.gsmkotlin.domain.user.application.dto.LoginResponseDto
 import gsm.gsmkotlin.domain.user.application.dto.SignupDto
 import gsm.gsmkotlin.domain.user.application.dto.UserInfoDto
 import gsm.gsmkotlin.global.filter.JwtReqFilter.Companion.BEARER_PREFIX
@@ -25,11 +26,12 @@ class UserServiceImpl(
 ) : UserService {
     
     @Transactional(rollbackFor = [Exception::class])
-    override fun login(loginDto: LoginDto): String {
+    override fun login(loginDto: LoginDto): LoginResponseDto {
         val email = googleLoginFeignClientService.login(loginDto.accessToken).email
         val user = userReader.readUserByEmailOrNull(email)
             ?: userProcessor.register(email)
-        return BEARER_PREFIX + tokenGenerator.generateToken(user.id.toString()).accessToken
+        val accessToken = BEARER_PREFIX + tokenGenerator.generateToken(user.id.toString()).accessToken
+        return userMapper.mappingLoginResponse(user, accessToken)
     }
     
     @Transactional(rollbackFor = [Exception::class])
