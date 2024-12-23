@@ -17,4 +17,11 @@ class CamValidator(
         }
     }
     
+    fun validIsDuplicatedCamId(camId: String) {
+        val isExist = camRepository.existsById(camId)
+        if(isExist) {
+            throw GlobalException("cam id가 중복됩니다. cma id = $camId", HttpStatus.BAD_REQUEST)
+        }
+    }
+    
 }
